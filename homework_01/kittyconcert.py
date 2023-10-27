@@ -11,7 +11,7 @@ cat1.greet(cat2.getName())
 
 cat2.intro()
 cat2.greet(cat1.getName())
-
+print("---------------------------------------------------------")
 
 
 # - Aufgabe 2.2 -------------------------------------------------
@@ -20,7 +20,7 @@ print(listeDerQuadrate)
 
 listeDerGeradenQuadrate = [x**2 for x in range(101) if x % 2 == 0]
 print(listeDerGeradenQuadrate)
-
+print("---------------------------------------------------------")
 
 
 # - Aufgabe 2.3 --------------------------------------------------
@@ -32,7 +32,7 @@ def create_MiauGenerator(anzahl:int):
 miauGenerator = create_MiauGenerator(7)
 for i in miauGenerator:
     print(i)
-
+print("---------------------------------------------------------")
 
 
 # - Aufgabe 2.4 --------------------------------------------------
