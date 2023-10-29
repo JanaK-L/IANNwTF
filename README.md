@@ -1,4 +1,4 @@
-# Welcome! This is the Homework Repository of Team "Slow and Steady wins the Race!" 🐢🐢🐢
+# Welcome! This is the Implementing Artificial Neural Networks with TensorFlow Homework Repository of Team "Slow and Steady wins the Race!" 🐢🐢🐢
 
 
 ### <ins>Group Members:</ins>
