@@ -1,2 +1,0 @@
-Funktionalitäten vom Data Preprocessing über den Hinweg bis zum Loss sind implementiert.
-Problematisch ist der Rückweg (Backpropagation), da ich Probleme mit den Shapes der Matrizen beim aneinander multiplizieren der Leibnizkette habe.

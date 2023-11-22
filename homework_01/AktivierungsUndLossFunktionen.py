@@ -12,7 +12,7 @@ class Sigmoid():
 
     # Funktion zur Berechnung der Aktivierung erwartet ndarrays der shape (minibatchsize, anzahlNeurons)
     # wobei anzahlNeurons die Anzahl an Perceptrons in dem Layer, in welchem die Aktivierungsfunktion aufgerufen wird, ist.
-    def call(self, preactivation:np.ndarray, minibatchsize:int, anzahlNeurons:int):
+    def call(self, preactivation:np.ndarray, minibatchsize:int, anzahlNeurons:int) -> np.ndarray:
         # Überprüfe, ob das preActivation Array die richtige Form hat (minibatchsize, 64)
         expectedShape = (minibatchsize, anzahlNeurons)  # + 1 für den Bias
         #print("erwartet:", expectedShape)
@@ -27,7 +27,7 @@ class Sigmoid():
 
 
     # Erste Ableitung der sigmoiden Funktion berechnen    
-    def backwards(preactivation:np.ndarray, ):
+    def backwards(self, preactivation:np.ndarray) -> np.ndarray:
         return (1 / (1 + math.e **(-preactivation))) * (1 - (1 / (1 + math.e **(-preactivation))))
 
 
@@ -48,7 +48,7 @@ class Softmax():
     # Funktion zur Berechnung der Aktivierung
     # Die Softmaxfunktion wandelt den Eingabevektor in eine Wahrscheinlichkeitsverteilung um, d. h. der Eingabevektor ist an jedem Eintrag positiv und summiert sich zu eins auf.
     # Das Ergebnis dieser Aktivierung sind also die Wahrscheinlichkeiten dafür, dass ein Graubild eine der Zahlen 0,1,2,3,4,5,6,7,8 oder 9 darstellt. Klassifikation des Graubildes.
-    def call(self, preactivation:np.ndarray, minibatchsize:int, anzahlNeurons:int = 10):
+    def call(self, preactivation:np.ndarray, minibatchsize:int, anzahlNeurons:int = 10) -> np.ndarray:
         # Überprüfe, ob das preActivation Array die richtige Form hat (minibatchsize, 10)
         expectedShape = (minibatchsize, anzahlNeurons)
         #print("erwartet:", expectedShape)
@@ -70,10 +70,12 @@ class Softmax():
             sys.exit(-1)  # Fehler, Exitcode 0 wäre kein Fehler
 
 
-    # wird nicht benötigt, da die Ableitung bereits in der cce Ableitung der cce Funktion berücksichtigt wird    
-    def backwards(self):
-        pass
-
+    # kombinierte erste Ableitung aus CCE und Softmax
+    def backwards(self, klassifikationsErgebnisDesMLP: int, targets:np.ndarray) -> np.ndarray:
+        # erste Ableitung von CCE und Softmax zusammen ist: a - t = aktivierung - targetwert
+        # klassifikazionsErgebnisDesMLP muss shape (minibatchsize, 10) haben
+        # shape sollte (minibatchsize, 10) sein
+        return klassifikationsErgebnisDesMLP - targets    
        
 
         
@@ -93,7 +95,7 @@ class CCE():
         pass
 
 
-    def call(self, klassifikationsErgebnisDesMLP: int, targets:np.ndarray):
+    def call(self, klassifikationsErgebnisDesMLP: int, targets:np.ndarray) -> np.ndarray:
         # Die Targets liegen in der One Hot Codierung mit einer shape von [minibatchsize, 10] vor.
         # Das KlassifikationsErgebnisDesMLP (= prediction) liegt ebenfalls in der shape [minibatchsize, 10] vor.
         innen = targets * np.log(klassifikationsErgebnisDesMLP)
@@ -101,11 +103,6 @@ class CCE():
         return cceLoss                              
 
 
-    def backwards(self, klassifikationsErgebnisDesMLP: int, targets:np.ndarray):
-        # erste Ableitung von CCE und Softmax zusammen ist: a - t = aktivierung - targetwert
-        # klassifikazionsErgebnisDesMLP muss shape (minibatchsize, 10) haben
-        # shape sollte (minibatchsize, 10) sein
-        return klassifikationsErgebnisDesMLP - targets
-
-
-
+    # wird nicht benötigt, da die kombinierte Ableitung aus CCE und Softmax bereits in der Softmax backwards Funktion berücksichtigt wird    
+    #def backwards(self):
+       #pass
