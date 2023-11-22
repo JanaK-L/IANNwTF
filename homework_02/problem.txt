@@ -1,0 +1,4 @@
+Problem ist, dass ich nicht verstehe, wie ich das Modell des neuronalen Netzes in TF erzeugen kann.
+Das Hauptproblem besteht vermutlich darin, dass ich aufgrund der Tatsache, dass ich sehr lange für
+Hausaufgabe 1 gebraucht habe, noch nicht genug Zeit hatte, um die für diese Hausaufgabe benötigten
+Inhalte tiefer zu durchdringen.
