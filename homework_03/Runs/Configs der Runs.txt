@@ -1,0 +1,84 @@
+Plots werden als SVGs gespeichert. 
+Mit Rechtsklick auf SVG Datei und dann mit Firefox öffnen, um den Plot anzuschauen.
+Orange = Test, Blau = Training
+
+----------------------------------------------------
+
+Run 1 (Basis Konfiguration mit Adam):
+SHUFFLE_BUFFER_SIZE = 1000
+BATCH_SIZE = 64
+NUM_EPOCHS = 10
+LR = 0.001
+OPTIMIZER = ADAM
+ARCHITECTURE (ANZAHL UND GRÖßE DER LAYER) = 
+
+self.convLayer1 = tf.keras.layers.Conv2D(filters = 24, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 32, 32, 24)
+self.convLayer2 = tf.keras.layers.Conv2D(filters = 24, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 32, 32, 24)
+self.pooling = tf.keras.layers.MaxPooling2D(pool_size = 2, strides = 2)  # halbieren der X und Y Dimensionsgröße der Activationmaps, output shape: (batch_size, 16, 16, 24)
+
+self.convLayer3 = tf.keras.layers.Conv2D(filters = 48, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 16, 16, 48)
+self.convLayer4 = tf.keras.layers.Conv2D(filters = 48, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 16, 16, 48)
+self.global_pooling = tf.keras.layers.GlobalAvgPool2D()  # 48 Werte in einem Vektor, output ist ein feature_vector der shape: (batch_size, 48)
+
+self.output_layer = tf.keras.layers.Dense(units = output_size, activation = tf.nn.softmax)  # output shape: (batch_size, 10)
+
+----------------------------------------------------
+
+Run 2 (anderer Optimizer):
+OPTIMIZER = RMSProp
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Run 3 (kleinere Layer):
+filters = 12 in den ersten beiden conv2D Layern
+filters = 24 in den letzten beiden conv2D Layern
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Run 4 (größere Layer):
+filters = 48 in den ersten beiden conv2D Layern
+filters = 96 in den letzten beiden conv2D Layern
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Run 5 (weniger Layer):
+MaxPooling Layer und conv2D Layer drei und vier fallen weg
+self.convLayer1 = tf.keras.layers.Conv2D(filters = 24, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 32, 32, 24)
+self.convLayer2 = tf.keras.layers.Conv2D(filters = 24, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 32, 32, 24)
+self.global_pooling = tf.keras.layers.GlobalAvgPool2D()  # 48 Werte in einem Vektor, output ist ein feature_vector der shape: (batch_size, 48)
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Run 6 (mehr Layer):
+self.convLayer1 = tf.keras.layers.Conv2D(filters = 24, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 32, 32, 24)
+self.convLayer2 = tf.keras.layers.Conv2D(filters = 24, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 32, 32, 24)
+self.pooling = tf.keras.layers.MaxPooling2D(pool_size = 2, strides = 2)  # halbieren der X und Y Dimensionsgröße der Activationmaps, output shape: (batch_size, 16, 16, 24)
+
+self.convLayer3 = tf.keras.layers.Conv2D(filters = 48, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 16, 16, 48)
+self.convLayer4 = tf.keras.layers.Conv2D(filters = 48, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 16, 16, 48)
+self.pooling2 = tf.keras.layers.MaxPooling2D(pool_size = 2, strides = 2)  # halbieren der X und Y Dimensionsgröße der Activationmaps, output shape: (batch_size, 8, 8, 48)
+
+self.convLayer5 = tf.keras.layers.Conv2D(filters = 96, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 8, 8, 96)
+self.convLayer6 = tf.keras.layers.Conv2D(filters = 96, kernel_size = 3, padding = "same", activation = "relu")  # output shape: (batch_size, 8, 8, 96)
+self.global_pooling = tf.keras.layers.GlobalAvgPool2D()  # 48 Werte in einem Vektor, output ist ein feature_vector der shape: (batch_size, 96)
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Run 7 (höhere Lernrate):
+LR = 0.1
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Run 8 (kleinere Lernrate):
+LR = 0.00001
+Restliche Parameter bleiben unverändert.
+
+----------------------------------------------------
+
+Ergebnisse: Beste Accuracy hat Run 6 (mehr Layer). Schlechteste Accuracy hat Run 5 (weniger Layer).
